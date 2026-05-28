@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         NRK Bokmål
 // @namespace    https://github.com/ALorentzen/nrk-bokmal
-// @version      3.0.0
+// @version      3.0.1
 // @description  Konverterer nynorsk automatisk til bokmål på nrk.no
 // @author       ALorentzen
 // @match        *://*.nrk.no/*
@@ -65286,6 +65286,7 @@ const NN_TO_NB = {
 'øyværingar':'øyværinger'
 };
 
+
 const SKIP_TAGS = new Set([
   'script', 'style', 'noscript', 'code', 'pre',
   'input', 'textarea', 'select', 'option',
@@ -65300,32 +65301,82 @@ function preserveCase(original, replacement) {
   return replacement;
 }
 
-// Compound-stem fallback for words not in dictionary
-// Handles nynorsk stems inside longer compound words not in the dictionary
+// Nynorsk-specific stems that occur inside compound words not in the dictionary.
+// Each entry: [regex, replacement_string]  (regex is applied to full word token)
 const COMPOUND_STEMS = [
-  [/sommar/gi, (m) => preserveCase(m, 'sommer')],
-  [/haust/gi,  (m) => preserveCase(m, 'høst')],
-  [/sjuke/gi,  (m) => preserveCase(m, 'syke')],
-  [/skulen/gi, (m) => preserveCase(m, 'skolen')],
-  [/skule/gi,  (m) => preserveCase(m, 'skole')],
-  [/vatn/gi,   (m) => preserveCase(m, 'vann')],
+  // seasons / common stems
+  [/sommar/g, 'sommer'],  [/Sommar/g, 'Sommer'],  [/SOMMAR/g, 'SOMMER'],
+  [/haust/g,  'høst'],    [/Haust/g,  'Høst'],    [/HAUST/g,  'HØST'],
+  // sick / health
+  [/sjuke/g,  'syke'],    [/Sjuke/g,  'Syke'],
+  // school
+  [/skulen/g, 'skolen'],  [/Skulen/g, 'Skolen'],
+  [/skule/g,  'skole'],   [/Skule/g,  'Skole'],
+  // water
+  [/vatn/g,   'vann'],    [/Vatn/g,   'Vann'],
+  [/vass/g,   'vann'],    [/Vass/g,   'Vann'],
+  // service / tjeneste  (teneste = standalone, tenesta = definite)
+  [/tenesta/g,'tjenesta'],[/Tenesta/g,'Tjenesta'],
+  [/teneste/g,'tjeneste'],[/Teneste/g,'Tjeneste'],
+  // giver/donor (arbeidsgjevar → arbeidsgiver)
+  [/gjevar/g, 'giver'],   [/Gjevar/g, 'Giver'],
+  // eier/owner
+  [/eigar/g,  'eier'],    [/Eigar/g,  'Eier'],
 ];
 
 function convertWord(word) {
   const lower = word.toLowerCase();
+
+  // 1. Dictionary lookup — 65,000+ explicit NN→BM forms
   const mapped = NN_TO_NB[lower];
   if (mapped !== undefined) return preserveCase(word, mapped);
 
-  // Compound stem fallback: "sommarfiske" → "sommerfiske"
+  // 2. Compound-stem substitution
+  //    Replaces NN-specific sub-stems inside compound words the dict doesn't cover.
+  //    e.g. "sommarfiske" → "sommerfiske", "helsetenesta" → "helsetjenesta"
+  //    After stem replacement the suffix rules below still run on the result.
+  let working = word;
   if (lower.length >= 6) {
-    let w = word;
-    for (const [pattern, fn] of COMPOUND_STEMS) {
-      w = w.replace(pattern, fn);
+    for (const [pattern, replacement] of COMPOUND_STEMS) {
+      working = working.replace(pattern, replacement);
     }
-    if (w !== word) return w;
+    if (working !== word) {
+      // Check if the stem-replaced form is already in the dictionary
+      const remapped = NN_TO_NB[working.toLowerCase()];
+      if (remapped !== undefined) return preserveCase(working, remapped);
+      // Otherwise fall through to suffix rules using the stem-replaced form
+    }
   }
 
-  return word;
+  // 3. Morphological suffix rules — Norwegian grammar fallback.
+  //    Covers inflected forms of any NN word not yet in the dictionary.
+  //    Applied to `working` so stem-replaced compounds also benefit.
+  const wl = working.toLowerCase();
+
+  // -ane → -ene  (definite plural: "bilane"→"bilene", "kommunane"→"kommunene")
+  if (wl.length >= 6 && wl.endsWith('ane')) {
+    return working.slice(0, -3) + preserveCase(working.slice(-3), 'ene');
+  }
+  // -inga → -ingen  (def. of -ing nouns: "turneringa"→"turneringen")
+  if (wl.length >= 7 && wl.endsWith('inga')) {
+    return working.slice(0, -4) + preserveCase(working.slice(-4), 'ingen');
+  }
+  // -are → -ere  (comparative: "finare"→"finere", "raskare"→"raskere")
+  if (wl.length >= 6 && wl.endsWith('are')) {
+    return working.slice(0, -3) + preserveCase(working.slice(-3), 'ere');
+  }
+  // -aste → -este  (superlative: "finaste"→"fineste", "flottaste"→"flotteste")
+  if (wl.length >= 6 && wl.endsWith('aste')) {
+    return working.slice(0, -4) + preserveCase(working.slice(-4), 'este');
+  }
+  // -ar → -er  (indefinite plural: "kommunar"→"kommuner", "politikarar"→"politikarer")
+  //   7+ chars avoids ambiguous short words
+  if (wl.length >= 7 && wl.endsWith('ar')) {
+    return working.slice(0, -2) + preserveCase(working.slice(-2), 'er');
+  }
+
+  // Return stem-replaced form if anything changed, else original
+  return working;
 }
 
 function convertText(text) {
