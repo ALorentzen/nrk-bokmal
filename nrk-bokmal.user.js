@@ -217,6 +217,30 @@ const NN_TO_NB = {
   'bilane':'bilene','dagane':'dagene','tala':'tallene',
   'borna':'barna','vegane':'veiene',
 
+  // ━━━ SEASONS
+  'sommar':'sommer','sommaren':'sommeren','sommarleg':'sommerlig',
+  'sommarferie':'sommerferie','sommardag':'sommerdag','sommarfiske':'sommerfiske',
+  'haust':'høst','hausten':'høsten','haustferie':'høstferie','haustdag':'høstdag',
+
+  // ━━━ PAST PARTICIPLES
+  'forsvunne':'forsvunnet','funnen':'funnet','teke':'tatt',
+  'skrive':'skrevet','drive':'drevet','sove':'sovet',
+
+  // ━━━ VERBS IN NEWS
+  'auke':'øke','aukar':'øker','auka':'økte','auken':'økningen',
+  'nemne':'nevne','nemnar':'nevner','nemnte':'nevnte','nemnd':'nevnt',
+  'peike':'peke','peikar':'peker','peika':'pekte',
+  'fortelje':'fortelle','fortel':'forteller','fortalde':'fortalte',
+  'hevde':'hevde','hevdar':'hevder','hevda':'hevdet',
+  'meldar':'melder','melda':'meldt',
+  'understrekar':'understreker','understreka':'understreket',
+  'stadfeste':'bekrefte','stadfestar':'bekrefter','stadfesta':'bekreftet',
+  'presiserar':'presiserer',
+
+  // ━━━ NOUNS IN NEWS
+  'hending':'hendelse','hendinga':'hendelsen','hendingar':'hendelser','hendingane':'hendelsene',
+  'kjensle':'følelse','kjensla':'følelsen','kjensler':'følelser','kjenslene':'følelsene',
+
   // ━━━ SPORTS
   'vann':'vant','tapar':'taper',
 
@@ -231,6 +255,14 @@ const NN_TO_NB = {
 };
 
 // ─── Engine ──────────────────────────────────────────────────────────────────
+
+const COMPOUND_STEMS = [
+  [/sommar/g,'sommer'],[/Sommar/g,'Sommer'],[/SOMMAR/g,'SOMMER'],
+  [/haust/g,'høst'],[/Haust/g,'Høst'],[/HAUST/g,'HØST'],
+  [/sjuke/g,'syke'],[/Sjuke/g,'Syke'],
+  [/skulen/g,'skolen'],[/skule/g,'skole'],
+  [/vatn/g,'vann'],[/Vatn/g,'Vann'],
+];
 
 const SKIP_TAGS = new Set([
   'script','style','noscript','code','pre','input','textarea','select','option',
@@ -258,6 +290,15 @@ function convertWord(word) {
   // -inga → -ingen  (definite of -ing nouns)
   if (lower.length >= 7 && lower.endsWith('inga')) {
     return word.slice(0, -4) + preserveCase(word.slice(-4), 'ingen');
+  }
+
+  // Compound stem replacement: "sommarfiske" → "sommerfiske" etc.
+  if (lower.length >= 6) {
+    let w = word;
+    for (const [pattern, replacement] of COMPOUND_STEMS) {
+      w = w.replace(pattern, replacement);
+    }
+    if (w !== word) return w;
   }
 
   return word;

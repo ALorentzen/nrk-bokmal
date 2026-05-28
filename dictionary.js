@@ -593,6 +593,92 @@ const NN_TO_NB = {
   'temperaturane':'temperaturene',
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // SEASONS
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  'sommar':       'sommer',
+  'sommaren':     'sommeren',
+  'sommarleg':    'sommerlig',
+  'sommarferie':  'sommerferie',
+  'sommardag':    'sommerdag',
+  'sommarfiske':  'sommerfiske',
+  'haust':        'høst',
+  'hausten':      'høsten',
+  'haustferie':   'høstferie',
+  'haustdag':     'høstdag',
+  'vår':          'vår',
+  'våren':        'våren',
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // PAST PARTICIPLES MISSING FROM ORIGINAL
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  'forsvunne':    'forsvunnet',
+  'funnen':       'funnet',
+  'skrive':       'skrevet',
+  'teke':         'tatt',
+  'drive':        'drevet',
+  'kome':         'kommet',
+  'sove':         'sovet',
+  'give':         'gitt',
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // VERBS COMMON IN NEWS (missing from v1)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  'auke':         'øke',
+  'aukar':        'øker',
+  'auka':         'økte',
+  'auken':        'økningen',
+  'nemne':        'nevne',
+  'nemnar':       'nevner',
+  'nemnte':       'nevnte',
+  'nemnd':        'nevnt',
+  'peike':        'peke',
+  'peikar':       'peker',
+  'peika':        'pekte',
+  'fortelje':     'fortelle',
+  'fortel':       'forteller',
+  'fortalde':     'fortalte',
+  'hevde':        'hevde',
+  'hevdar':       'hevder',
+  'hevda':        'hevdet',
+  'meldar':       'melder',
+  'melda':        'meldt',
+  'understreke':  'understreke',
+  'understrekar': 'understreker',
+  'understreka':  'understreket',
+  'stadfeste':    'bekrefte',
+  'stadfestar':   'bekrefter',
+  'stadfesta':    'bekreftet',
+  'erkjenne':     'erkjenne',
+  'erkjenner':    'erkjenner',
+  'erkjende':     'erkjente',
+  'avklare':      'avklare',
+  'avklarar':     'avklarer',
+  'opplyse':      'opplyse',
+  'opplyser':     'opplyser',
+  'klargjere':    'klargjøre',
+  'klargjør':     'klargjør',
+  'presisere':    'presisere',
+  'presiserar':   'presiserer',
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // NOUNS COMMON IN NEWS (missing from v1)
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  'hending':      'hendelse',
+  'hendinga':     'hendelsen',
+  'hendingar':    'hendelser',
+  'hendingane':   'hendelsene',
+  'kjensle':      'følelse',
+  'kjensla':      'følelsen',
+  'kjensler':     'følelser',
+  'kjenslene':    'følelsene',
+  'årsaka':       'årsaken',
+  'årsaker':      'årsaker',
+  'innsjø':       'innsjø',
+  'innsjøen':     'innsjøen',
+  'fiske':        'fiske',
+  'fisket':       'fisket',
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // MISC HIGH-FREQUENCY
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   'guten':        'gutten',

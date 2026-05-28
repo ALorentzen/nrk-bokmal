@@ -15,6 +15,22 @@ function preserveCase(original, replacement) {
   return replacement;
 }
 
+// Nynorsk stems that appear inside compound words (e.g. "sommarfiske" → "sommerfiske")
+const COMPOUND_STEMS = [
+  [/sommar/g, 'sommer'],
+  [/Sommar/g, 'Sommer'],
+  [/SOMMAR/g, 'SOMMER'],
+  [/haust/g,  'høst'],
+  [/Haust/g,  'Høst'],
+  [/HAUST/g,  'HØST'],
+  [/sjuke/g,  'syke'],
+  [/Sjuke/g,  'Syke'],
+  [/skulen/g, 'skolen'],
+  [/skule/g,  'skole'],
+  [/vatn/g,   'vann'],
+  [/Vatn/g,   'Vann'],
+];
+
 function convertWord(word) {
   const lower = word.toLowerCase();
   const mapped = NN_TO_NB[lower];
@@ -28,6 +44,15 @@ function convertWord(word) {
   // -inga → -ingen  (definite of -ing nouns: "turneringa" → "turneringen")
   if (lower.length >= 7 && lower.endsWith('inga')) {
     return word.slice(0, -4) + preserveCase(word.slice(-4), 'ingen');
+  }
+
+  // Compound stem replacement: handles "sommarfiske" → "sommerfiske" etc.
+  if (lower.length >= 6) {
+    let w = word;
+    for (const [pattern, replacement] of COMPOUND_STEMS) {
+      w = w.replace(pattern, replacement);
+    }
+    if (w !== word) return w;
   }
 
   return word;
