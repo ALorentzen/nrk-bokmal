@@ -182,18 +182,28 @@ var NN_TO_NB = {
   'nødvendige':   'nødvendige',
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // NORWAY
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  'noreg':        'norge',
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // VERBS — to be / become
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   'vera':     'være',
   'vere':     'være',
+  'er':       'er',
   'vert':     'blir',
   'vart':     'ble',
+  'blei':     'ble',
   'vorte':    'blitt',
   'vorten':   'blitt',
+  'vore':     'vært',
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // VERBS — common irregular
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  'gler':         'gleder',
+  'glede':        'glede',
   'gjera':    'gjøre',
   'gjere':    'gjøre',
   'gjer':     'gjør',
@@ -327,8 +337,55 @@ var NN_TO_NB = {
   'spora':        'sporet',
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // VERBS — more past participles and forms
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  'oppheva':      'opphevet',
+  'oppheve':      'oppheve',
+  'opphever':     'opphever',
+  'godkjende':    'godkjente',
+  'godkjend':     'godkjent',
+  'pålagde':      'pålagte',
+  'pålagd':       'pålagt',
+  'tilsett':      'ansatt',
+  'tilsette':     'ansatte',
+  'innlagd':      'innlagt',
+  'innlagde':     'innlagte',
+  'utlagd':       'utlagt',
+  'avlagd':       'avlagt',
+  'krevjande':    'krevende',
+  'krevje':       'kreve',
+  'krevjer':      'krever',
+  'oppnådd':      'oppnådd',
+  'melde':        'melde',
+  'meldt':        'meldt',
+  'opplyste':     'opplyste',
+  'innrømde':     'innrømte',
+  'innrømd':      'innrømt',
+  'erkjende':     'erkjente',
+  'erkjend':      'erkjent',
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // NOUNS — different stem from bokmål
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  'heime':        'hjemme',
+  'heimstad':     'hjemsted',
+  'verdas':       'verdens',
+  'leilegheit':   'leilighet',
+  'leilegheita':  'leiligheten',
+  'leilegheiter': 'leiligheter',
+  'leilegheitene':'leilighetene',
+  'opphald':      'opphold',
+  'opphaldstillatelse': 'oppholdstillatelse',
+  'opphaldstillating':  'oppholdstillatelse',
+  'bustadkommune':'bostedskommune',
+  'bustad':       'bosted',
+  'bustaden':     'bostedet',
+  'delar':        'deler',
+  'delen':        'delen',
+  'sjanselaust':  'sjansesløst',
+  'uunverleg':    'uunnværlig',
+  'uunverlegare': 'uunnværligere',
+  'kåra':         'kåret',
   'heim':         'hjem',
   'heimen':       'hjemmet',
   'heimar':       'hjem',

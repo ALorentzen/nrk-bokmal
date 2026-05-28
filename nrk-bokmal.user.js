@@ -82,9 +82,13 @@ const NN_TO_NB = {
   'betre':'bedre','sterkare':'sterkere',
   'veik':'svak','veike':'svake','veikare':'svakere',
 
+  // ━━━ NORWAY
+  'noreg':'norge',
+
   // ━━━ VERBS: to be / become
   'vera':'være','vere':'være',
-  'vert':'blir','vart':'ble','vorte':'blitt','vorten':'blitt',
+  'vert':'blir','vart':'ble','blei':'ble',
+  'vorte':'blitt','vorten':'blitt','vore':'vært',
 
   // ━━━ VERBS: irregular
   'gjera':'gjøre','gjere':'gjøre','gjer':'gjør',
@@ -135,6 +139,22 @@ const NN_TO_NB = {
   'løfta':'løftet','samla':'samlet','skaffa':'skaffet',
   'berga':'berget','hindra':'hindret','nekta':'nektet',
   'tvinga':'tvunget','lova':'lovet','spora':'sporet',
+
+  // ━━━ EXTRA COMMON
+  'gler':'gleder',
+  'heime':'hjemme','heimstad':'hjemsted',
+  'verdas':'verdens',
+  'leilegheit':'leilighet','leilegheita':'leiligheten','leilegheiter':'leiligheter',
+  'opphald':'opphold','opphaldstillatelse':'oppholdstillatelse',
+  'bustad':'bosted','bustaden':'bostedet',
+  'delar':'deler',
+  'sjanselaust':'sjansesløst',
+  'uunverleg':'uunnværlig',
+  'kåra':'kåret',
+  'oppheva':'opphevet','godkjende':'godkjente','godkjend':'godkjent',
+  'pålagde':'pålagte','pålagd':'pålagt',
+  'tilsett':'ansatt','tilsette':'ansatte',
+  'innlagd':'innlagt','krevjande':'krevende','krevje':'kreve','krevjer':'krever',
 
   // ━━━ NOUNS: different stem
   'heim':'hjem','heimen':'hjemmet','heimar':'hjem','heimane':'hjemmene',
@@ -295,6 +315,16 @@ function convertWord(word) {
   // -inga → -ingen  (definite of -ing nouns)
   if (lower.length >= 7 && lower.endsWith('inga')) {
     return word.slice(0, -4) + preserveCase(word.slice(-4), 'ingen');
+  }
+
+  // -are → -ere (comparative: "tristare" → "tristere")
+  if (lower.length >= 6 && lower.endsWith('are')) {
+    return word.slice(0, -3) + preserveCase(word.slice(-3), 'ere');
+  }
+
+  // -aste → -este (superlative: "finaste" → "fineste")
+  if (lower.length >= 6 && lower.endsWith('aste')) {
+    return word.slice(0, -4) + preserveCase(word.slice(-4), 'este');
   }
 
   // -ar → -er (nynorsk plural: "grasrotorganisasjonar" → "grasrotorganisasjoner")

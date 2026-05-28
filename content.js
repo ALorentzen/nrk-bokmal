@@ -46,6 +46,16 @@ function convertWord(word) {
     return word.slice(0, -4) + preserveCase(word.slice(-4), 'ingen');
   }
 
+  // -are → -ere  (nynorsk comparative: "tristare" → "tristere", "finare" → "finere")
+  if (lower.length >= 6 && lower.endsWith('are')) {
+    return word.slice(0, -3) + preserveCase(word.slice(-3), 'ere');
+  }
+
+  // -aste → -este  (nynorsk superlative: "finaste" → "fineste", "flottaste" → "flotteste")
+  if (lower.length >= 6 && lower.endsWith('aste')) {
+    return word.slice(0, -4) + preserveCase(word.slice(-4), 'este');
+  }
+
   // -ar → -er  (nynorsk plural suffix for most nouns: "grasrotorganisasjonar" → "grasrotorganisasjoner")
   // Only fires on words 7+ chars to avoid short ambiguous words
   if (lower.length >= 7 && lower.endsWith('ar')) {
