@@ -4,7 +4,8 @@
 // Nynorsk → Bokmål dictionary
 // Keys are lowercase nynorsk word forms. Case is restored by the engine.
 // Dictionary-only — no suffix guessing rules.
-const NN_TO_NB = {
+// var so it attaches to window and is visible from content.js
+var NN_TO_NB = {
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // PRONOUNS
@@ -18,6 +19,12 @@ const NN_TO_NB = {
   'dykkar':   'deres',
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  // DEMONSTRATIVES
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  'desse':        'disse',
+  'desse':        'disse',
+
+  // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // DETERMINERS / QUANTIFIERS
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   'ein':          'en',
@@ -29,6 +36,10 @@ const NN_TO_NB = {
   'nokon':        'noen',
   'nokre':        'noen',
   'korkje':       'verken',
+  'fleire':       'flere',
+  'fleirtal':     'flertall',
+  'fleirtalet':   'flertallet',
+  'færre':        'færre',
 
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   // NEGATION
@@ -58,6 +69,9 @@ const NN_TO_NB = {
   // ADVERBS
   // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   'no':           'nå',
+  'då':           'da',
+  'nemleg':       'nemlig',
+  'nemlege':      'nemlige',
   'framleis':     'fremdeles',
   'allereie':     'allerede',
   'tidleg':       'tidlig',

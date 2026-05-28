@@ -46,6 +46,12 @@ function convertWord(word) {
     return word.slice(0, -4) + preserveCase(word.slice(-4), 'ingen');
   }
 
+  // -ar → -er  (nynorsk plural suffix for most nouns: "grasrotorganisasjonar" → "grasrotorganisasjoner")
+  // Only fires on words 7+ chars to avoid short ambiguous words
+  if (lower.length >= 7 && lower.endsWith('ar')) {
+    return word.slice(0, -2) + preserveCase(word.slice(-2), 'er');
+  }
+
   // Compound stem replacement: handles "sommarfiske" → "sommerfiske" etc.
   if (lower.length >= 6) {
     let w = word;

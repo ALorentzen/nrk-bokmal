@@ -19,9 +19,13 @@ const NN_TO_NB = {
   'eg':'jeg','ho':'hun','dei':'de','deira':'deres','deim':'dem',
   'dykk':'dere','dykkar':'deres',
 
+  // ━━━ DEMONSTRATIVES
+  'desse':'disse',
+
   // ━━━ DETERMINERS
   'ein':'en','eit':'et','kvar':'hver','kvart':'hvert','kvarandre':'hverandre',
   'noko':'noe','nokon':'noen','nokre':'noen','korkje':'verken',
+  'fleire':'flere','fleirtal':'flertall','fleirtalet':'flertallet',
 
   // ━━━ NEGATION
   'ikkje':'ikke',
@@ -34,7 +38,8 @@ const NN_TO_NB = {
   'medan':'mens','anten':'enten','elles':'ellers','òg':'også','dessutan':'dessuten',
 
   // ━━━ ADVERBS
-  'no':'nå','framleis':'fremdeles','allereie':'allerede',
+  'no':'nå','då':'da','nemleg':'nemlig','nemlege':'nemlige',
+  'framleis':'fremdeles','allereie':'allerede',
   'tidleg':'tidlig','tidlege':'tidlige','tidlegare':'tidligere','tidlegast':'tidligst',
   'seint':'sent','seinare':'senere','seinast':'senest',
   'sidan':'siden','berre':'bare','mykje':'mye','meir':'mer',
@@ -290,6 +295,11 @@ function convertWord(word) {
   // -inga → -ingen  (definite of -ing nouns)
   if (lower.length >= 7 && lower.endsWith('inga')) {
     return word.slice(0, -4) + preserveCase(word.slice(-4), 'ingen');
+  }
+
+  // -ar → -er (nynorsk plural: "grasrotorganisasjonar" → "grasrotorganisasjoner")
+  if (lower.length >= 7 && lower.endsWith('ar')) {
+    return word.slice(0, -2) + preserveCase(word.slice(-2), 'er');
   }
 
   // Compound stem replacement: "sommarfiske" → "sommerfiske" etc.
