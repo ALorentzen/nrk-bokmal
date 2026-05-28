@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
   "name": "NRK Bokmål",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Konverterer nynorsk automatisk til bokmål på NRK.no",
   "content_scripts": [
     {
       "matches": ["*://*.nrk.no/*"],
-      "js": ["content.js"],
+      "js": ["dictionary.js", "content.js"],
       "run_at": "document_idle"
     }
   ],
