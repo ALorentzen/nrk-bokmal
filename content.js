@@ -1,5 +1,6 @@
 'use strict';
 // NN_TO_NB is loaded from dictionary.js before this file runs
+// 65,000+ word form mappings from Norsk Ordbank + curated entries
 
 const SKIP_TAGS = new Set([
   'script', 'style', 'noscript', 'code', 'pre',
@@ -15,20 +16,15 @@ function preserveCase(original, replacement) {
   return replacement;
 }
 
-// Nynorsk stems that appear inside compound words (e.g. "sommarfiske" → "sommerfiske")
+// Compound-stem fallback for words not in dictionary
+// Handles nynorsk stems inside longer compound words not in the dictionary
 const COMPOUND_STEMS = [
-  [/sommar/g, 'sommer'],
-  [/Sommar/g, 'Sommer'],
-  [/SOMMAR/g, 'SOMMER'],
-  [/haust/g,  'høst'],
-  [/Haust/g,  'Høst'],
-  [/HAUST/g,  'HØST'],
-  [/sjuke/g,  'syke'],
-  [/Sjuke/g,  'Syke'],
-  [/skulen/g, 'skolen'],
-  [/skule/g,  'skole'],
-  [/vatn/g,   'vann'],
-  [/Vatn/g,   'Vann'],
+  [/sommar/gi, (m) => preserveCase(m, 'sommer')],
+  [/haust/gi,  (m) => preserveCase(m, 'høst')],
+  [/sjuke/gi,  (m) => preserveCase(m, 'syke')],
+  [/skulen/gi, (m) => preserveCase(m, 'skolen')],
+  [/skule/gi,  (m) => preserveCase(m, 'skole')],
+  [/vatn/gi,   (m) => preserveCase(m, 'vann')],
 ];
 
 function convertWord(word) {
@@ -36,37 +32,11 @@ function convertWord(word) {
   const mapped = NN_TO_NB[lower];
   if (mapped !== undefined) return preserveCase(word, mapped);
 
-  // -ane → -ene  (definite plural: "bilane" → "bilene", "kampane" → "kampene")
-  if (lower.length >= 6 && lower.endsWith('ane')) {
-    return word.slice(0, -3) + preserveCase(word.slice(-3), 'ene');
-  }
-
-  // -inga → -ingen  (definite of -ing nouns: "turneringa" → "turneringen")
-  if (lower.length >= 7 && lower.endsWith('inga')) {
-    return word.slice(0, -4) + preserveCase(word.slice(-4), 'ingen');
-  }
-
-  // -are → -ere  (nynorsk comparative: "tristare" → "tristere", "finare" → "finere")
-  if (lower.length >= 6 && lower.endsWith('are')) {
-    return word.slice(0, -3) + preserveCase(word.slice(-3), 'ere');
-  }
-
-  // -aste → -este  (nynorsk superlative: "finaste" → "fineste", "flottaste" → "flotteste")
-  if (lower.length >= 6 && lower.endsWith('aste')) {
-    return word.slice(0, -4) + preserveCase(word.slice(-4), 'este');
-  }
-
-  // -ar → -er  (nynorsk plural suffix for most nouns: "grasrotorganisasjonar" → "grasrotorganisasjoner")
-  // Only fires on words 7+ chars to avoid short ambiguous words
-  if (lower.length >= 7 && lower.endsWith('ar')) {
-    return word.slice(0, -2) + preserveCase(word.slice(-2), 'er');
-  }
-
-  // Compound stem replacement: handles "sommarfiske" → "sommerfiske" etc.
+  // Compound stem fallback: "sommarfiske" → "sommerfiske"
   if (lower.length >= 6) {
     let w = word;
-    for (const [pattern, replacement] of COMPOUND_STEMS) {
-      w = w.replace(pattern, replacement);
+    for (const [pattern, fn] of COMPOUND_STEMS) {
+      w = w.replace(pattern, fn);
     }
     if (w !== word) return w;
   }
